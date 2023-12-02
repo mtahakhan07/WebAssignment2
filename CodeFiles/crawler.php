@@ -9,7 +9,7 @@ function crawl($url, $depth = 0) {
         return;
     }
 
-    // Your crawling logic here
+    // Crawling logic here
     $html = fetchHtml($url);
     $links = extractLinks($html);
 
