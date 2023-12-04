@@ -2,9 +2,9 @@
 // db.php
 
 $servername = "localhost";
-$username = "your_username";
-$password = "your_password";
-$dbname = "your_database";
+$username = "root";
+$password = "151208";
+$dbname = "my_database";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -25,13 +25,15 @@ $sql = "CREATE TABLE IF NOT EXISTS crawled_data (
 $conn->query($sql);
 
 // Function to insert data into the database
-function insertData($url, $content) {
+function insertData($url, $title, $metaDescription) {
     global $conn;
 
     $url = $conn->real_escape_string($url);
-    $content = $conn->real_escape_string($content);
+    $title = $conn->real_escape_string($title);
+    $metaDescription = $conn->real_escape_string($metaDescription);
 
-    $sql = "INSERT INTO crawled_data (url, content) VALUES ('$url', '$content')";
+    $sql = "INSERT INTO crawled_data (url, title, meta_description) VALUES ('$url', '$title', '$metaDescription')";
     $conn->query($sql);
 }
+
 ?>

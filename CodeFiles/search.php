@@ -4,11 +4,13 @@
 include 'config.php';
 include 'utils.php';
 
-function searchContent($content, $url) {
-    global $searchString;
+function searchContent($content, $url, $searchString, $caseSensitive = false) {
+    $searchContent = $caseSensitive ? $content : strtolower($content);
+    $searchString = $caseSensitive ? $searchString : strtolower($searchString);
 
-    if (stripos($content, $searchString) !== false) {
+    if (strpos($searchContent, $searchString) !== false) {
         logMessage("Search String Found in $url:\n$content");
     }
 }
+
 ?>
