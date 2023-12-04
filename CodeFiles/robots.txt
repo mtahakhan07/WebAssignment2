@@ -1,3 +1,0 @@
-<?php
-// Logic to check robots.txt directives
-?>

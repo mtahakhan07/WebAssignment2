@@ -1,9 +1,10 @@
 <?php
-include 'config.php';
-include 'crawler.php';
+// index.php
 
-// Main entry point logic here
-$startUrl = 'https://example.com';
+include 'crawler.php';
+include 'search.php';
+
+$startUrl = 'https://example.com'; 
 crawl($startUrl);
 
 ?>

@@ -1,5 +1,6 @@
 <?php
-// Queue management functions
+// queue.php
+
 $urlQueue = [];
 
 function enqueue($url, $depth) {
@@ -11,3 +12,4 @@ function dequeue() {
     global $urlQueue;
     return array_shift($urlQueue);
 }
+?>

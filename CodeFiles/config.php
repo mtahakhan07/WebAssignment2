@@ -1,6 +1,6 @@
 <?php
-// Configuration settings
-$userAgent = 'YourCrawlerBot/1.0';
-$maxDepth = 5; 
 
+$userAgent = 'MyWebCrawler/1.0';
+$maxDepth = 5;
+$searchString = 'string_to_be_searched'; 
 ?>

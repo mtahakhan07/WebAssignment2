@@ -1,4 +1,7 @@
 <?php
+// crawler.php
+
+include 'config.php';
 include 'utils.php';
 include 'queue.php';
 
@@ -9,21 +12,47 @@ function crawl($url, $depth = 0) {
         return;
     }
 
-    // Crawling logic here
+    // Fetch HTML content
     $html = fetchHtml($url);
-    $links = extractLinks($html);
 
-    foreach ($links as $link) {
-        enqueue($link, $depth + 1);
-    }
+    if ($html) {
+        // Parse HTML to extract relevant information
+        $parsedData = parseHtml($html);
 
-    // Extract and process data from $html
+        // Log the extracted information
+        logMessage("URL: $url\n" . json_encode($parsedData, JSON_PRETTY_PRINT));
 
-    // Continue crawling for each link in the queue
-    while ($nextUrl = dequeue()) {
-        crawl($nextUrl['url'], $nextUrl['depth']);
+        // Extract and enqueue URLs
+        $links = extractLinks($html, $url, $depth);
+        foreach ($links as $link) {
+            enqueue($link, $depth + 1);
+        }
+    } else {
+        logMessage("Error fetching URL: $url");
     }
 }
 
-// Other functions for making HTTP requests, parsing HTML, etc.
+function extractLinks($html, $baseUrl, $depth) {
+    $links = [];
+
+    $dom = new DOMDocument;
+    @$dom->loadHTML($html);
+
+    $xpath = new DOMXPath($dom);
+    $hrefs = $xpath->evaluate("/html/body//a");
+
+    for ($i = 0; $i < $hrefs->length; $i++) {
+        $link = $hrefs->item($i);
+        $url = $link->getAttribute('href');
+
+        // Ensure the URL is absolute
+        $url = filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED | FILTER_FLAG_QUERY_REQUIRED);
+        if ($url) {
+            $links[] = $url;
+        }
+    }
+
+    return $links;
+}
+
 ?>
