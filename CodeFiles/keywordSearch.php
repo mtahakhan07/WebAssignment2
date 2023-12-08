@@ -1,10 +1,16 @@
+<?php
+//This is keywordSearch.php
+if(isset($_GET['filename'])){
+    $filename=urlencode($_GET['filename']);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to the Web Crawler</title>
+    <title>Search Interface</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -14,15 +20,14 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background: linear-gradient(to left, #9BB8CD, #FFF7D4); /* Gradient from light blue to light soothing color */; 
+            background: linear-gradient(to left, #9BB8CD, #FFF7D4);
         }
 
-        h1 {
+        h2 {
             position: absolute;
             top: 100px;
             color: #333;
-            font-size: 3em; 
-            
+            font-size: 2.5em; 
         }
 
         form {
@@ -42,37 +47,25 @@
             margin: 5px;
         }
 
-        input[type="url"],
         input[type="text"] {
             width: 300px;
         }
-
-        textarea {
-            width: 100%;
-            height: 300px;
-        }
-
-        #logTextArea {
-            margin-top: 10px;
-        }
     </style>
 </head>
-
 <body>
-    <h1>Welcome to the Web Crawler</h1>
-
-    <form id="crawlerForm" action="crawler.php" method="POST">
-        <label for="seedUrl">Seed URL:</label>
-        <input type="url" name="seedUrl" id="seedUrl" placeholder="Enter seed URL" required>
+    <h2>Search Interface</h2>
+    <form action="keywordResults.php" method="post">
+        <label for="keyword">Enter Keyword:</label>
+        <input type="text" name="keyword" id="keyword" placeholder="Type your keyword" required>
+        <input type="hidden" name="filename" value="<?php echo $filename; ?>">
         <br>
-        <label for="maxDepth">Max Depth:</label>
-        <input type="text" name="maxDepth" id="maxDepth" placeholder="Enter max depth" required>
-        <br>
-        <button type="submit" style="background-color: #EEC759; color: black;">Start Crawling</button>
+        <button type="submit" style="background-color: #EEC759; color: black;">Search</button>
     </form>
-
 </body>
-
 </html>
 
-
+<?php
+}else{
+    header("location: index.php");
+}
+?>
